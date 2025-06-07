@@ -40,7 +40,7 @@ onMounted(async () => {
 
 <template>
   <!-- templating a simple variable -->
-  <h1>{{ name }}</h1>
+  <h1 class="text-sm">{{ name }}</h1>
 
   <!-- conditional rendering -->
   <p v-if="status === 'active'"> User is active</p>
