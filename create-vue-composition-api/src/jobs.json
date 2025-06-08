@@ -1,8 +1,8 @@
 {
   "jobs": [
     {
-      "title": "Senior Vue Dev",
-      "type": "Full-Time",
+      "title": "Senior Vue Developer",
+      "type": "Remote",
       "location": "Boston, MA",
       "description": "We are seeking a talented Front-End Developer to join our team in Boston, MA. The ideal candidate will have strong skills in HTML, CSS, and JavaScript, with experience working with modern JavaScript frameworks such as Vue or Angular.",
       "salary": "$90K - $100K",
@@ -97,6 +97,20 @@
         "contactEmail": "coch@email.com",
         "contactPhone": "123-123-123"
       }
+    },
+    {
+      "title": "Updated Job",
+      "type": "Full-Time",
+      "location": "dfsdfsdfsdf",
+      "description": "sfdsdfsdfsd",
+      "salary": "$90K - $100K",
+      "company": {
+        "name": "",
+        "description": "fdfdsdfsfds",
+        "contactEmail": "sdf@dfssdfdsf",
+        "contactPhone": "123123123"
+      },
+      "id": "2115"
     }
   ]
 }

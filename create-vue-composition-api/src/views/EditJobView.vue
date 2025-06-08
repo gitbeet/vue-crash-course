@@ -2,7 +2,15 @@
 import { reactive } from "vue";
 import axios from "axios";
 import { useToast } from "vue-toastification";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { onMounted } from "vue";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+
+const toast = useToast();
+const route = useRoute();
+const router = useRouter();
+
+const jobId = route.params.id;
 
 const form = reactive({
   type: "Full-Time",
@@ -18,11 +26,36 @@ const form = reactive({
   },
 });
 
-const toast = useToast();
-const router = useRouter();
+const state = reactive({
+  job: {},
+  isLoading: true,
+});
+
+onMounted(async () => {
+  try {
+    const response = await axios.get(`/api/jobs/${jobId}`);
+    state.job = response.data;
+    form.type = state.job.type;
+    form.title = state.job.title;
+    form.description = state.job.description;
+    form.salary = state.job.salary;
+    form.location = state.job.location;
+    form.company.name = state.job.company.name;
+    form.company.description = state.job.company.description;
+    form.company.contactEmail = state.job.company.contactEmail;
+    form.company.contactPhone = state.job.company.contactPhone;
+  } catch (error) {
+    console.error("Error while fetching job: ", error);
+  } finally {
+    setTimeout(() => {
+      state.isLoading = false;
+      console.log(state.job);
+    }, 500);
+  }
+});
 
 const handleSubmit = async () => {
-  const newJob = {
+  const updatedJob = {
     title: form.title,
     type: form.type,
     location: form.location,
@@ -37,22 +70,30 @@ const handleSubmit = async () => {
   };
 
   try {
-    const response = await axios.post(`/api/jobs/`, newJob);
-    toast.success("Job added successfully");
+    const response = await axios.put(`/api/jobs/${jobId}`, updatedJob);
+    toast.success("Job edited successfully");
     router.push(`/jobs/${response.data.id}`);
   } catch (error) {
-    toast.error("Error while adding the job");
+    toast.error("Error while editing the job");
   }
 };
 </script>
 <template>
-  <section class="bg-green-50">
+  <div
+    v-if="state.isLoading"
+    class="text-center text-gray-500 py-6"
+    ><PulseLoader
+  /></div>
+  <section
+    v-else
+    class="bg-green-50"
+  >
     <div class="container m-auto max-w-2xl py-24">
       <div
         class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0"
       >
         <form @submit.prevent="handleSubmit">
-          <h2 class="text-3xl text-center font-semibold mb-6">Add Job</h2>
+          <h2 class="text-3xl text-center font-semibold mb-6">Edit Job</h2>
 
           <div class="mb-4">
             <label
@@ -100,7 +141,7 @@ const handleSubmit = async () => {
               name="description"
               class="border rounded w-full py-2 px-3"
               rows="4"
-              placeholder="Add any job duties, expectations, requirements, etc"
+              placeholder="Edit any job duties, expectations, requirements, etc"
             ></textarea>
           </div>
 
@@ -189,7 +230,7 @@ const handleSubmit = async () => {
               id="contact_email"
               name="contact_email"
               class="border rounded w-full py-2 px-3"
-              placeholder="Email address for applicants"
+              placeholder="Email Editress for applicants"
               required
             />
           </div>
@@ -214,7 +255,7 @@ const handleSubmit = async () => {
               class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              Add Job
+              Edit Job
             </button>
           </div>
         </form>
