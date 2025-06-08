@@ -83,6 +83,20 @@
         "contactEmail": "contact@ipsumlorem.com",
         "contactPhone": "555-555-5555"
       }
+    },
+    {
+      "id": "f34b",
+      "title": "Epic internship joob",
+      "type": "Internship",
+      "location": "Murcia",
+      "description": "Hello",
+      "salary": "Under $50K",
+      "company": {
+        "name": "",
+        "description": "Best company ever",
+        "contactEmail": "coch@email.com",
+        "contactPhone": "123-123-123"
+      }
     }
   ]
 }

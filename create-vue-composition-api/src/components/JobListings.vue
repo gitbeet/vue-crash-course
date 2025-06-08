@@ -21,8 +21,8 @@ const state = reactive({
 // similar to useEffect with an empty dep array
 onMounted(async () => {
   try {
-    const resposnse = await axios.get("http://localhost:5000/jobs");
-    state.jobs = resposnse.data;
+    const response = await axios.get("/api/jobs");
+    state.jobs = response.data;
   } catch (error) {
     console.error("Error while fetching jobs: ", error);
   } finally {
